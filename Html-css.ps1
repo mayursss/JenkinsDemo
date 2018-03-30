@@ -7,7 +7,7 @@ $ImageBits =  [Convert]::ToBase64String((Get-Content $ImagePath -Encoding Byte))
 $ImageFile = Get-Item $ImagePath
 $ImageType = $ImageFile.Extension.Substring(1) #strip off the leading .
 $ImageTag = "<Img src='data:image/$ImageType;base64,$($ImageBits)' Alt='$($ImageFile.Name)' style='float:left' width='120' height='120' hspace=10>"
- 
+ #
 $top = @"
 <table>
 <tr>
