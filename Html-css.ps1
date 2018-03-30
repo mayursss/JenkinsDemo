@@ -194,5 +194,4 @@ write-output "          Sending email"
 
 $Smtp.Send($Msg) # Send the message 
 $Msg.Attachments.Dispose()
-
 Invoke-Item $report
