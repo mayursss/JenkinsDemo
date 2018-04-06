@@ -1,13 +1,15 @@
 ﻿$Now = (Get-date)
+$Computername = $env:COMPUTERNAME
 $report ="$env:temp\System_Health_report_"+$Now.ToString('MM-dd-yyyy')+".html"
 Set-Content $report ""
 $fragments = @()
-$ImagePath = "C:\Users\ms458j\Documents\PS-Scripts\css\db.png"
-$ImageBits =  [Convert]::ToBase64String((Get-Content $ImagePath -Encoding Byte))
-$ImageFile = Get-Item $ImagePath
-$ImageType = $ImageFile.Extension.Substring(1) #strip off the leading .
-$ImageTag = "<Img src='data:image/$ImageType;base64,$($ImageBits)' Alt='$($ImageFile.Name)' style='float:left' width='120' height='120' hspace=10>"
- #
+#$ImagePath = "C:\Users\ms458j\Documents\PS-Scripts\css\db.png"
+#$ImageBits =  [Convert]::ToBase64String((Get-Content $ImagePath -Encoding Byte))
+#$ImageFile = Get-Item $ImagePath
+#$ImageType = $ImageFile.Extension.Substring(1) #strip off the leading .
+#$ImageTag = "<Img src='data:image/$ImageType;base64,$($ImageBits)' Alt='$($ImageFile.Name)' style='float:left' width='120' height='120' hspace=10>"
+#
+
 $top = @"
 <table>
 <tr>
@@ -188,10 +190,8 @@ $Msg.Subject = $messageSubject # Add the message subject to email
 $Msg.IsBodyHTML = $true # set email format to html
 [string]$body=get-content $report
 $Msg.Body = ($body,'<H5>Thank you</H5>','<H3>ATT-EMAS Team</H3>') # Add the bodytext to the message 
-
+$Msg.Body
 write-output "          Sending email"
-
-
 $Smtp.Send($Msg) # Send the message 
 $Msg.Attachments.Dispose()
-Invoke-Item $report
+#Invoke-Item $report
