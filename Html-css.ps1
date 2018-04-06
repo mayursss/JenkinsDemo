@@ -35,7 +35,7 @@ $fragments+= "<a href='javascript:toggleDiv(""$div"");' title='click to collapse
  
 $cs = Get-CimInstance -ClassName Win32_computersystem #-ComputerName $Computername  
 $proc = Get-CimInstance -ClassName win32_processor #-ComputerName $Computername 
- 
+
 $data1 = [ordered]@{
 TotalPhysicalMemGB = $cs.TotalPhysicalMemory/1GB -as [int]
 NumProcessors = $cs.NumberOfProcessors
