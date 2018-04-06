@@ -1,4 +1,4 @@
-﻿$Now = (Get-date)
+$Now = (Get-date)
 $Computername = $env:COMPUTERNAME
 $report ="$env:temp\System_Health_report_"+$Now.ToString('MM-dd-yyyy')+".html"
 Set-Content $report ""
@@ -37,18 +37,33 @@ $fragments+= "<a href='javascript:toggleDiv(""$div"");' title='click to collapse
  
 $cs = Get-CimInstance -ClassName Win32_computersystem #-ComputerName $Computername  
 $proc = Get-CimInstance -ClassName win32_processor #-ComputerName $Computername 
+if ($cs.NumberOfProcessors -gt 1){
+foreach($item in $proc){
+    $CPU_Name += "$($item.Name)`n"
+    $DeviceID += "$($item.DeviceID)`n"
+    $MaxClock += "$($item.MaxClockSpeed)`n"
+    $L2size += "$($item.L2CacheSize)`n"
+    $L3Size += "$($item.L3CacheSize)`n"
+    }
+}
+Else {
+$CPU_Name = $item.Name
+$DeviceID = $item.DeviceID
+$MaxClock = $item.MaxClockSpeed
+$L2size = $item.L2CacheSize
+$L3Size = $item.L3CacheSize
+}
 
 $data1 = [ordered]@{
 TotalPhysicalMemGB = $cs.TotalPhysicalMemory/1GB -as [int]
 NumProcessors = $cs.NumberOfProcessors
 NumLogicalProcessors = $cs.NumberOfLogicalProcessors
 HyperVisorPresent = $cs.HypervisorPresent
-DeviceID = $proc.DeviceID
-Name = $proc.Name
-MaxClock = $proc.MaxClockSpeed
-L2size = $proc.L2CacheSize
-L3Size = $proc.L3CacheSize
- 
+DeviceID = $DeviceID
+Name = $CPU_Name
+MaxClock = $MaxClock
+L2size = $L2size
+L3Size = $L3Size 
 }
 $fragments+= New-Object -TypeName PSObject -Property $data1 | ConvertTo-Html -Fragment -As List
 $fragments+="</div>"
