@@ -140,7 +140,7 @@ td, th { border:0px solid black;
 th { color:white;
      background-color:black; }
 table, tr, td, th { padding: 2px; margin: 0px ;white-space:pre; }
-tr:nth-child(odd) {background-color: lightgray}
+<tr:nth-child(odd) {background-color: lightgray}
 table { width:95%;margin-left:5px; margin-bottom:20px;}
 h2 {
  font-family:Tahoma;
@@ -186,7 +186,7 @@ $convertParams = @{
 convertto-html @convertParams | out-file $report
 
 
-##############################################
+<##############################################
 ################# Email ######################
 ##############################################
 $smtpServer = "smtp.it.att.com"
@@ -210,3 +210,4 @@ write-output "          Sending email"
 $Smtp.Send($Msg) # Send the message 
 $Msg.Attachments.Dispose()
 #Invoke-Item $report
+#>
